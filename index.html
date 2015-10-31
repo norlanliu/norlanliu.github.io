@@ -130,112 +130,12 @@
 
       
       <section id="main">
-      <article id="post-rotate-vector" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/31/rotate-vector/">平移数组（Rotate Vector）</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/31/rotate-vector/">
-      <time datetime="2015-10-31T02:48:22.000Z" itemprop="datePublished">2015-10-31</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
-<h2 id="问题">问题</h2><hr>
-<p>Rotate a one-dimensional vector of n elements left by i positions.
-For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated to <code>deftabc</code>.</p>
-<h2 id="Naive_idea">Naive idea</h2><hr>
-<ol>
-<li>另外声明一个数组存储前i个元素，然后把后面的元素左移i位，最后再把数组里面
-的i个元素复制到原数组的最右边的i个位置。显然这种方法是空间复杂度是O(i)，时间
-复杂度O(n).</li>
-<li>另<code>t=x[0]</code>,然后move <code>x[i]</code> to <code>x[0]</code>, <code>x[2i]</code> to <code>x[i]</code>，依次类推，然后再
-把<code>t</code>放到最后的位置；然后是<code>x[1]</code>，最后一直到<code>x[i-1]</code>。空间复杂度O(1)，时间
-复杂度O(n).<h2 id="Aha!">Aha!</h2></li>
-</ol>
-<hr>
-<p>首先，show the code:
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reverse(<span class="number">0</span>, i-<span class="number">1</span>);    <span class="comment">/* cbadefgh */</span></span><br><span class="line">reverse(i, n-<span class="number">1</span>);    <span class="comment">/* cbahgfed */</span></span><br><span class="line">reverse(<span class="number">0</span>, n-<span class="number">1</span>);    <span class="comment">/* defghcba */</span></span><br></pre></td></tr></table></figure></p>
-<p>这算法的过程的有点神奇，过程比较清楚，分为三步：</p>
-<ol>
-<li>反转前i个元素;</li>
-<li>反转后面n-i个元素;</li>
-<li>反转所有的n个元素。</li>
-</ol>
-<p>虽然结果正确，但难免没有说服力，先面就证明一下。</p>
-<ol>
-<li>对于<code>0 &lt;= x &lt; i</code>的元素，第一步反转以后,<code>x</code>的位置为<code>x&#39;</code>, 因为<code>x&#39;</code>和<code>x</code>关于
-<code>i/2</code>对称，所以<blockquote>
-<p><code>x&#39; = i-x</code></p>
-</blockquote>
-</li>
-<li>对于<code>0 &lt;= y &lt; i</code>的元素，第二步反转以后,<code>y</code>的位置为<code>y&#39;</code>, 因为<code>y&#39;</code>和<code>y</code>关于
-<code>(n-1+i)/2</code>对称，所以<blockquote>
-<p><code>y&#39; = n-1+i-y</code></p>
-</blockquote>
-</li>
-<li>对于<code>x</code>，平移以后最终的位置是<code>x =&gt; n-1+x-i</code>。
-第三步反转后，<code>x&#39;</code>的位置为:<blockquote>
-<p><code>x&#39; =&gt; n-1 - x&#39; = n-1+x-i</code></p>
-</blockquote>
-</li>
-<li>对于<code>y</code>，平移以后最终的位置是<code>y =&gt; y-i</code>。
-第三步反转后，<code>y&#39;</code>的位置为:<blockquote>
-<p><code>y&#39; =&gt; n-1 - y&#39; = y-i</code></p>
-</blockquote>
-</li>
-</ol>
-<p>证明结束。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cigehozb10006ttpvmxtd32et" class="article-share-link">分享到</a>
-      
-        <a href="http://norlanliu.github.io/2015/10/31/rotate-vector/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vector/">vector</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2015/10/29/hello-world/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144706.webp" class="article-banner"></a>
+		<a href="/2015/10/31/hello-world/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144706.webp" class="article-banner"></a>
 	
 
 
@@ -247,7 +147,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/29/hello-world/">Github Pages + Hexo + Linux = Blog</a>
+      <a class="article-title" href="/2015/10/31/hello-world/">Github Pages + Hexo + Linux = Blog</a>
     </h1>
   
 
@@ -255,8 +155,8 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/29/hello-world/">
-      <time datetime="2015-10-29T03:04:43.000Z" itemprop="datePublished">2015-10-29</time>
+    <a href="/2015/10/31/hello-world/">
+      <time datetime="2015-10-31T02:51:01.000Z" itemprop="datePublished">2015-10-31</time>
     </a>
   </div>
 
@@ -348,12 +248,120 @@ Markdown怎么写。</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/29/hello-world/" data-id="cigehozb5000dttpvxxckoit6" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/31/hello-world/" data-id="cigehsbaz000dz1pvhrdg5p4e" class="article-share-link">分享到</a>
       
-        <a href="http://norlanliu.github.io/2015/10/29/hello-world/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://norlanliu.github.io/2015/10/31/hello-world/#ds-thread" class="article-comment-link">评论</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-rotate-vector" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2015/10/31/rotate-vector/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144580.webp" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/31/rotate-vector/">平移数组（Rotate Vector）</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/31/rotate-vector/">
+      <time datetime="2015-10-31T02:48:22.000Z" itemprop="datePublished">2015-10-31</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<h2 id="问题">问题</h2><hr>
+<p>Rotate a one-dimensional vector of n elements left by i positions.
+For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated to <code>deftabc</code>.</p>
+<h2 id="Naive_idea">Naive idea</h2><hr>
+<ol>
+<li>另外声明一个数组存储前i个元素，然后把后面的元素左移i位，最后再把数组里面
+的i个元素复制到原数组的最右边的i个位置。显然这种方法是空间复杂度是O(i)，时间
+复杂度O(n).</li>
+<li>另<code>t=x[0]</code>,然后move <code>x[i]</code> to <code>x[0]</code>, <code>x[2i]</code> to <code>x[i]</code>，依次类推，然后再
+把<code>t</code>放到最后的位置；然后是<code>x[1]</code>，最后一直到<code>x[i-1]</code>。空间复杂度O(1)，时间
+复杂度O(n).<h2 id="Aha!">Aha!</h2></li>
+</ol>
+<hr>
+<p>首先，show the code:
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reverse(<span class="number">0</span>, i-<span class="number">1</span>);    <span class="comment">/* cbadefgh */</span></span><br><span class="line">reverse(i, n-<span class="number">1</span>);    <span class="comment">/* cbahgfed */</span></span><br><span class="line">reverse(<span class="number">0</span>, n-<span class="number">1</span>);    <span class="comment">/* defghcba */</span></span><br></pre></td></tr></table></figure></p>
+<p>这算法的过程的有点神奇，过程比较清楚，分为三步：</p>
+<ol>
+<li>反转前i个元素;</li>
+<li>反转后面n-i个元素;</li>
+<li>反转所有的n个元素。</li>
+</ol>
+<p>虽然结果正确，但难免没有说服力，先面就证明一下。</p>
+<ol>
+<li>对于<code>0 &lt;= x &lt; i</code>的元素，第一步反转以后,<code>x</code>的位置为<code>x&#39;</code>, 因为<code>x&#39;</code>和<code>x</code>关于
+<code>i/2</code>对称，所以<blockquote>
+<p><code>x&#39; = i-x</code></p>
+</blockquote>
+</li>
+<li>对于<code>0 &lt;= y &lt; i</code>的元素，第二步反转以后,<code>y</code>的位置为<code>y&#39;</code>, 因为<code>y&#39;</code>和<code>y</code>关于
+<code>(n-1+i)/2</code>对称，所以<blockquote>
+<p><code>y&#39; = n-1+i-y</code></p>
+</blockquote>
+</li>
+<li>对于<code>x</code>，平移以后最终的位置是<code>x =&gt; n-1+x-i</code>。
+第三步反转后，<code>x&#39;</code>的位置为:<blockquote>
+<p><code>x&#39; =&gt; n-1 - x&#39; = n-1+x-i</code></p>
+</blockquote>
+</li>
+<li>对于<code>y</code>，平移以后最终的位置是<code>y =&gt; y-i</code>。
+第三步反转后，<code>y&#39;</code>的位置为:<blockquote>
+<p><code>y&#39; =&gt; n-1 - y&#39; = y-i</code></p>
+</blockquote>
+</li>
+</ol>
+<p>证明结束。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cigehsbav0006z1pv6o53vodq" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/10/31/rotate-vector/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vector/">vector</a></li></ul>
 
     </footer>
   </div>
@@ -437,7 +445,7 @@ Markdown怎么写。</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cigehozb9000mttpvt806cag3" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cigehsbb3000mz1pv6hasgs47" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/#ds-thread" class="article-comment-link">评论</a>
       
@@ -464,24 +472,7 @@ Markdown怎么写。</p>
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/31/rotate-vector/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/algorithm/">algorithm</a></p>
-              <p class="item-title"><a href="/2015/10/31/rotate-vector/" class="title">平移数组（Rotate Vector）</a></p>
-              <p class="item-date"><time datetime="2015-10-31T02:48:22.000Z" itemprop="datePublished">2015-10-31</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2015/10/29/hello-world/" class="thumbnail">
+              <a href="/2015/10/31/hello-world/" class="thumbnail">
   
     <span style="background-image:url(http://photos.tuchong.com/993772/f/19144706.webp)" alt="Github Pages + Hexo + Linux = Blog" class="thumbnail-image"></span>
   
@@ -490,8 +481,25 @@ Markdown怎么写。</p>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/blog/">blog</a></p>
-              <p class="item-title"><a href="/2015/10/29/hello-world/" class="title">Github Pages + Hexo + Linux = Blog</a></p>
-              <p class="item-date"><time datetime="2015-10-29T03:04:43.000Z" itemprop="datePublished">2015-10-29</time></p>
+              <p class="item-title"><a href="/2015/10/31/hello-world/" class="title">Github Pages + Hexo + Linux = Blog</a></p>
+              <p class="item-date"><time datetime="2015-10-31T02:51:01.000Z" itemprop="datePublished">2015-10-31</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/10/31/rotate-vector/" class="thumbnail">
+  
+    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144580.webp)" alt="平移数组（Rotate Vector）" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/algorithm/">algorithm</a></p>
+              <p class="item-title"><a href="/2015/10/31/rotate-vector/" class="title">平移数组（Rotate Vector）</a></p>
+              <p class="item-date"><time datetime="2015-10-31T02:48:22.000Z" itemprop="datePublished">2015-10-31</time></p>
             </div>
           </li>
         
