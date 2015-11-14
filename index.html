@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        3
+        4
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        15
+        16
         <span>标签</span>
       </div>
     </div>
@@ -130,12 +130,12 @@
 
       
       <section id="main">
-      <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-distributed-storage-system" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2015/10/31/hello-world/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144706.webp" class="article-banner"></a>
+		<a href="/2015/11/14/distributed-storage-system/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144660.webp" class="article-banner"></a>
 	
 
 
@@ -147,7 +147,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/31/hello-world/">Github Pages + Hexo + Linux = Blog</a>
+      <a class="article-title" href="/2015/11/14/distributed-storage-system/">分布式系统——容错</a>
     </h1>
   
 
@@ -155,105 +155,101 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/31/hello-world/">
-      <time datetime="2015-10-31T02:51:01.000Z" itemprop="datePublished">2015-10-31</time>
+    <a href="/2015/11/14/distributed-storage-system/">
+      <time datetime="2015-11-14T14:38:29.000Z" itemprop="datePublished">2015-11-14</time>
     </a>
   </div>
 
 
           
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/blog/">blog</a>
-  </div>
-
         </div>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <h2 id="前言">前言</h2><hr>
-<p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
-<p>网上已经有很多类似主题的博客了，为什么还要再写一篇呢，
-因为网上基本上都是写到搭建完成就完了，
-而不告诉我们后续如何使用，看来只能由本博主来完成这个任务了。   </p>
-<p>文章中所有操作均是在Fedora下完成的.</p>
-<p>本文包含以下几部分：</p>
-<ol>
-<li>博客搭建</li>
-<li>添加Categories/Tags/About页面</li>
-<li>Markdown语法</li>
-<li>添加评论系统</li>
-<li>如何写一篇博客直到发表出去</li>
-</ol>
-<h2 id="1-_博客搭建">1. 博客搭建</h2><hr>
-<p>声明：这部分我只是互联网的搬运工,具体<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>，git，node.js是什么，请自行google.</p>
-<p>转至：<a href="https://ckjoker.github.io/2015/01/27/Linux-github-hexo-blog/" target="_blank" rel="external">根据这篇文章足以完成建站</a></p>
-<p>本博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">icarus主题</a>，一下所有操作也均是
-基于此主题的。</p>
-<p>Milestone 0 ：至此建站完成</p>
-<h2 id="2-_添加Categories/Tags/About页面">2. 添加Categories/Tags/About页面</h2><hr>
-<p>由于主题里面的这三个页面都是空缺的，需要手动添加。当然也很简单，一条命令了事。</p>
-<p>以创建categories为例。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page <span class="string">"categories"</span></span><br><span class="line">INFO  Created: xxx/<span class="built_in">source</span>/categories/index.md</span><br></pre></td></tr></table></figure>
-<p>创建完以后，如果你懂markdown语法尽可在生成的index.md文件中添加东西。
-不懂也没有关系，只要你愿意学，我想也是分分钟的事情，接下来就来学习一下
-Markdown怎么写。</p>
-<p>通过hexo server命令来预览
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server </span><br><span class="line">INFO  Hexo is running at http://<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">4000</span>/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
-<p>Milestone 1 ：至此网站成型</p>
-<h2 id="3-_Markdown语法">3. Markdown语法</h2><hr>
-<p>网上资料甚多，在此我只列出几篇文章，然后再贴出一个About页面的md内容，请大家自行学习。</p>
-<h4 id="修改GFM换行规则">修改GFM换行规则</h4><p>首先，我想说明hexo使用的<a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank" rel="external">GFM</a>
-版本的Markdown语法，与标准Markdown的稍有不同。</p>
-<p>最不爽的GFM中文档的换行就对应到页面中的换行，所以你必须把一段长文放在一行中，
-这样看着就很不爽（特别是对某些vi的大神）。</p>
-<p>我们希望使用Markdown的换行规则(即使用空行来换行)。</p>
-<p>解决方案如下(icarus主题)：将第11行的breaks设为false。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vi node_modules/hexo-renderer-marked/index.js</span><br><span class="line"><span class="comment"># breaks: true 改为 breaks: false</span></span><br></pre></td></tr></table></figure>
-<p>重新生成即可
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
-<h4 id="Markdown语法资料">Markdown语法资料</h4><ul>
-<li><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">Markdown语法</a></li>
-<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">Markdown实例</a></li>
-<li><a href="http://ibruce.info/2013/11/26/markdown/" target="_blank" rel="external">Markdown简明语法</a></li>
-</ul>
-<p>通过这三篇文章足以满足平时写博客的需求。</p>
-<p>下面贴出一段About页面的md示例
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">title: 关于</span><br><span class="line">date: <span class="number">2015</span>-<span class="number">10</span>-<span class="number">14</span> <span class="number">16</span>:<span class="number">20</span>:<span class="number">42</span></span><br><span class="line">comments: <span class="literal">true</span></span><br><span class="line">---</span><br><span class="line"><span class="preprocessor">## 个人简介</span></span><br><span class="line">---</span><br><span class="line">我是一个有追求的人，一直未来的世界必然有属于我的一片天。</span><br><span class="line"><span class="preprocessor">## 喜欢的句子</span></span><br><span class="line">---</span><br><span class="line">* __生活不易，全靠演技__</span><br><span class="line"><span class="preprocessor">## 联系方式</span></span><br><span class="line">__Email: liuqi.edward(AT)gmail.com__</span><br></pre></td></tr></table></figure></p>
-<p>Milestone 2 ：恭喜你，至此你已经具备了写博客的所有条件了。</p>
-<h2 id="4-_添加评论系统">4. 添加评论系统</h2><hr>
-<p>添加多说评论：<a href="http://popozhu.github.io/2013/06/04/add-comment-of-duoshuo/" target="_blank" rel="external">http://popozhu.github.io/2013/06/04/add-comment-of-duoshuo/</a></p>
-<p>Milestone 3 ：你的博客看起来更完善了。</p>
-<h2 id="5-_如何写一篇博客并发表出去">5. 如何写一篇博客并发表出去</h2><ol>
-<li><p>新建一篇博文</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new post <span class="string">"tmp"</span></span><br><span class="line">INFO  Created: xxx/<span class="built_in">source</span>/_posts/tmp.md</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动hexo server来查看博文的展示效果（相当于调试）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写博文(<em>写的时候可定时查看相关页面，看看效果。</em>)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi <span class="built_in">source</span>/_posts/tmp.md</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写完成无误后，即可生成静态页面，提交到github上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><em>就是这么简单，感谢hexo，感谢github</em></p>
-<p>Milestone 4 ：至此你已经具备控制博客的能力了。</p>
-<h2 id="参考">参考</h2><hr>
-<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
+        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<h2 id="前言">前言</h2><hr>
+<p>通过将近一个月时间的学习，终于敢开始写着篇博客，如果有什么不对或者不足的地方，
+还望大家斧正。</p>
+<p>本文主要讨论分布式存储系统的主要的容错机制，以两种主流的一致性算法为主线，
+结合实际的分布式存储系统，看这些算法和系统是如何解决分布式存储中的一致性
+问题的。</p>
+<p>本文以问题的形式进行推进，希望大家在看的时候，能够站在一个系统设计者的角度
+去思考这些问题，当你思考过后再去看答案，没准你的想法会更好。</p>
+<h2 id="综述">综述</h2><hr>
+<p>分布式存储系统的一个主要目标就是实现容错，系统要保证在服务器/网络/程序
+任何一方面挂掉的情况下保持可用性，正确性。</p>
+<p><em>Q1: 如何实现系统的正确性和可用性？</em></p>
+<p>答案很简单，使用backup（副本），当系统中某个服务不可用了，立即切换到backup，
+由backup继续提供服务。那么问题又来了，backup接替了原来的primary，如果它的
+状态和原来的master不一致的话，就会导致client在不同时刻看到的系统状态不一致。
+就好比你的银行卡里今天有￥1M，明天看却只有￥1K了，这怎么能忍。</p>
+<p>换句话说，我们要保证整个系统在任何时候都要以相同的顺序执行相同的操作，前面
+已经执行完的操作也被后续的操作所继承，并且所有的操作只执行一次。</p>
+<p>所以接下来就看看如何解决这个一致性问题。</p>
+<h2 id="一致性">一致性</h2><hr>
+<p>其实，我们要解决的问题就是如何保证primary和backups之间的一致性。可能有人就会
+说了，这还不简单，只要保证primary和backups都执行了client的所有操作不就可以
+保证一致性了嘛。很好，那我们就按照这个思路继续往下走。</p>
+<p>首先，来看一看基本的消息模型。
+<img src="http://7xnl3v.com1.z0.glb.clouddn.com/norlanliupb.png" alt="Primary/Backup">
+那么问题来了。</p>
+<p><em>Q2：Primary 挂掉，该怎么办？</em></p>
+<p>如果Primary挂掉，我们首先想到的是把一个backup提成为Primary。接着，问题又来了
+提哪个backup呢？最naive的方法就是随机选一个backup作为新的Primary。如果这样，
+我们就必须保证所有的backup都是实时跟Primary同步的，这对系统的要求是极高的，
+也是不太现实的，由于网络，主机问题，如果要实现实时同步，会导致系统的响应延迟变得
+很高。那么有没有什么解决方案呢？显然是有的。下面就引出一致性算法里面极其重要
+的一个思想：<em>“Overlapping Majorities”</em>。</p>
+<p><em>“Overlapping Majorities”</em>的意思就是对每个操作，集群中至少有一半servers保存了
+该操作的状态，这样就至少有一台server执行了所有的操作，在通过适当的leader
+选举机制，就能够确保新的leader也执行了前面所有的操作。</p>
+<p>那么问题又来了，怎么去选举一个leader呢？</p>
+<p><em>Q3: 如何选举leader？</em></p>
+<p>我目前看到比较好的方案是raft算法的，给每台server设定一个随机时间，当该随机时间到达
+以后，这台server就会成为candidate，然后进行投票来实现leader选举。</p>
+<p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="external">Raft演示</a></p>
+<p><em>Q4: 如何保证所有的操作只执行一次(Exactly once) </em></p>
+<p>方法也很简单。给Client的每个请求都设置一个Unique ID来唯一标识请求，这样在Server
+执行每个请求时就可以过滤掉重复的请求。</p>
+<h2 id="场景分析">场景分析</h2><hr>
+<p>现在基本概念说清楚以后，我们来对消息传输的每个步骤来分析。</p>
+<p>1.Client发送Op到Primary</p>
+<p>如果这一步挂掉，相当于客户端没有发起请求，所以不会影响系统的一致性。</p>
+<p>2.Primary接收到Client的请求，转发该请求到Backups；</p>
+<p>如果这一步挂掉，Primary不会接收到Majority of Backups的确认信息，然后就会
+返回给Client一个失败的Reply。</p>
+<p>3.Backups返回Acks到Primary。</p>
+<p>如果某些Backups返回信息失败，但是只要Primary没有收到Majority of Backups的确认
+信息，它就会返回给Client失败的Reply。</p>
+<p>4.Primary接收到Majority of Backups的Acks信息后，Reply to Client.</p>
+<p>如果这一步失败，系统此时已经成功执行该操作，但是Client却没有收到成功的
+反馈，此时Client会处于一个Unknown state，Client重新发起该请求，由于是
+同一个请求（有相同的UUID），所以该请求会被过滤掉，直接返回给Client结果。</p>
+<p>5.Primary发送Commit信息给Backups。</p>
+<p>如果这一步失败，可以在以后的请求中在进行同步。Commit信息的目的是让Backups
+去执行所记录的操作。</p>
+<p>6.network partition</p>
+<p>如果出现网络划分。比如A，B，C，现在A是Primary，如果A被划分出去，那么A再
+接收到Client的请求后，就不会得到Majority of Backups的Acks了，就没有办法
+执行用户的操作。而B&amp;C会重新选举出一个Primary，执行用户的操作。</p>
+<p>如果网络修复以后，A就会回滚它的Uncommited的操作，然后去匹配新Leader的操作。</p>
+<h2 id="后记">后记</h2><hr>
+<p>以上就是基于leader选举的一致性算法，也是<a href="https://raft.github.io/" target="_blank" rel="external">RAFT</a>
+算法的基本思想。</p>
+<p>当然还有一种很出名的一致性算法<a href="https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" target="_blank" rel="external">Paxos</a>。
+有兴趣可以学习一下。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/31/hello-world/" data-id="cigehsbaz000dz1pvhrdg5p4e" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="cigz78051000m6opvznzryzwx" class="article-share-link">分享到</a>
       
-        <a href="http://norlanliu.github.io/2015/10/31/hello-world/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://norlanliu.github.io/2015/11/14/distributed-storage-system/#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consistency/">consistency</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/distributed-database/">distributed database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/draft/">draft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/failover/">failover</a></li></ul>
 
     </footer>
   </div>
@@ -352,11 +348,15 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
 </li>
 </ol>
 <p>证明结束。</p>
+<p>同时可以引出一个公式：
+<img src="http://chart.googleapis.com/chart?cht=tx&amp;chl=\Large [a^r b^r]^r=ba" alt="">
+该公式推广：
+<img src="http://chart.googleapis.com/chart?cht=tx&amp;chl=\Large [a^r b^r c^r...]^r=...cba" alt=""></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cigehsbav0006z1pv6o53vodq" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cigz7804s00066opv825is4yy" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/31/rotate-vector/#ds-thread" class="article-comment-link">评论</a>
       
@@ -445,12 +445,145 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cigehsbb3000mz1pv6hasgs47" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cigz78057000x6opvje8wu6u8" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/#ds-thread" class="article-comment-link">评论</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/binary-search/">binary search</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2015/10/27/hello-world/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19144706.webp" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/27/hello-world/">Github Pages + Hexo + Linux = Blog</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/27/hello-world/">
+      <time datetime="2015-10-27T03:06:05.000Z" itemprop="datePublished">2015-10-27</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h2 id="前言">前言</h2><hr>
+<p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<p>网上已经有很多类似主题的博客了，为什么还要再写一篇呢，
+因为网上基本上都是写到搭建完成就完了，
+而不告诉我们后续如何使用，看来只能由本博主来完成这个任务了。   </p>
+<p>文章中所有操作均是在Fedora下完成的.</p>
+<p>本文包含以下几部分：</p>
+<ol>
+<li>博客搭建</li>
+<li>添加Categories/Tags/About页面</li>
+<li>Markdown语法</li>
+<li>添加评论系统</li>
+<li>如何写一篇博客直到发表出去</li>
+</ol>
+<h2 id="1-_博客搭建">1. 博客搭建</h2><hr>
+<p>声明：这部分我只是互联网的搬运工,具体<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>，git，node.js是什么，请自行google.</p>
+<p>转至：<a href="https://ckjoker.github.io/2015/01/27/Linux-github-hexo-blog/" target="_blank" rel="external">根据这篇文章足以完成建站</a></p>
+<p>本博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">icarus主题</a>，一下所有操作也均是
+基于此主题的。</p>
+<p>Milestone 0 ：至此建站完成</p>
+<h2 id="2-_添加Categories/Tags/About页面">2. 添加Categories/Tags/About页面</h2><hr>
+<p>由于主题里面的这三个页面都是空缺的，需要手动添加。当然也很简单，一条命令了事。</p>
+<p>以创建categories为例。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page <span class="string">"categories"</span></span><br><span class="line">INFO  Created: xxx/<span class="built_in">source</span>/categories/index.md</span><br></pre></td></tr></table></figure>
+<p>创建完以后，如果你懂markdown语法尽可在生成的index.md文件中添加东西。
+不懂也没有关系，只要你愿意学，我想也是分分钟的事情，接下来就来学习一下
+Markdown怎么写。</p>
+<p>通过hexo server命令来预览
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server </span><br><span class="line">INFO  Hexo is running at http://<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">4000</span>/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
+<p>Milestone 1 ：至此网站成型</p>
+<h2 id="3-_Markdown语法">3. Markdown语法</h2><hr>
+<p>网上资料甚多，在此我只列出几篇文章，然后再贴出一个About页面的md内容，请大家自行学习。</p>
+<h4 id="修改GFM换行规则">修改GFM换行规则</h4><p>首先，我想说明hexo使用的<a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank" rel="external">GFM</a>
+版本的Markdown语法，与标准Markdown的稍有不同。</p>
+<p>最不爽的GFM中文档的换行就对应到页面中的换行，所以你必须把一段长文放在一行中，
+这样看着就很不爽（特别是对某些vi的大神）。</p>
+<p>我们希望使用Markdown的换行规则(即使用空行来换行)。</p>
+<p>解决方案如下(icarus主题)：将第11行的breaks设为false。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vi node_modules/hexo-renderer-marked/index.js</span><br><span class="line"><span class="comment"># breaks: true 改为 breaks: false</span></span><br></pre></td></tr></table></figure>
+<p>重新生成即可
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
+<h4 id="Markdown语法资料">Markdown语法资料</h4><ul>
+<li><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">Markdown语法</a></li>
+<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">Markdown实例</a></li>
+<li><a href="http://ibruce.info/2013/11/26/markdown/" target="_blank" rel="external">Markdown简明语法</a></li>
+</ul>
+<p>通过这三篇文章足以满足平时写博客的需求。</p>
+<p>下面贴出一段About页面的md示例
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">title: 关于</span><br><span class="line">date: <span class="number">2015</span>-<span class="number">10</span>-<span class="number">14</span> <span class="number">16</span>:<span class="number">20</span>:<span class="number">42</span></span><br><span class="line">comments: <span class="literal">true</span></span><br><span class="line">---</span><br><span class="line"><span class="preprocessor">## 个人简介</span></span><br><span class="line">---</span><br><span class="line">我是一个有追求的人，一直未来的世界必然有属于我的一片天。</span><br><span class="line"><span class="preprocessor">## 喜欢的句子</span></span><br><span class="line">---</span><br><span class="line">* __生活不易，全靠演技__</span><br><span class="line"><span class="preprocessor">## 联系方式</span></span><br><span class="line">__Email: liuqi.edward(AT)gmail.com__</span><br></pre></td></tr></table></figure></p>
+<p>Milestone 2 ：恭喜你，至此你已经具备了写博客的所有条件了。</p>
+<h2 id="4-_添加评论系统">4. 添加评论系统</h2><hr>
+<p>添加多说评论：<a href="http://popozhu.github.io/2013/06/04/add-comment-of-duoshuo/" target="_blank" rel="external">http://popozhu.github.io/2013/06/04/add-comment-of-duoshuo/</a></p>
+<p>Milestone 3 ：你的博客看起来更完善了。</p>
+<h2 id="5-_如何写一篇博客并发表出去">5. 如何写一篇博客并发表出去</h2><ol>
+<li><p>新建一篇博文</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new post <span class="string">"tmp"</span></span><br><span class="line">INFO  Created: xxx/<span class="built_in">source</span>/_posts/tmp.md</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动hexo server来查看博文的展示效果（相当于调试）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写博文(<em>写的时候可定时查看相关页面，看看效果。</em>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi <span class="built_in">source</span>/_posts/tmp.md</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写完成无误后，即可生成静态页面，提交到github上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>就是这么简单，感谢hexo，感谢github</em></p>
+<p>Milestone 4 ：至此你已经具备控制博客的能力了。</p>
+<h2 id="参考">参考</h2><hr>
+<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">hexo官方文档</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/10/27/hello-world/" data-id="cigz7804w000d6opvnd5rx88k" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/10/27/hello-world/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
 
     </footer>
   </div>
@@ -472,17 +605,17 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/31/hello-world/" class="thumbnail">
+              <a href="/2015/11/14/distributed-storage-system/" class="thumbnail">
   
-    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144706.webp)" alt="Github Pages + Hexo + Linux = Blog" class="thumbnail-image"></span>
+    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144660.webp)" alt="分布式系统——容错" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/blog/">blog</a></p>
-              <p class="item-title"><a href="/2015/10/31/hello-world/" class="title">Github Pages + Hexo + Linux = Blog</a></p>
-              <p class="item-date"><time datetime="2015-10-31T02:51:01.000Z" itemprop="datePublished">2015-10-31</time></p>
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/11/14/distributed-storage-system/" class="title">分布式系统——容错</a></p>
+              <p class="item-date"><time datetime="2015-11-14T14:38:29.000Z" itemprop="datePublished">2015-11-14</time></p>
             </div>
           </li>
         
@@ -520,6 +653,23 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
             </div>
           </li>
         
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/10/27/hello-world/" class="thumbnail">
+  
+    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144706.webp)" alt="Github Pages + Hexo + Linux = Blog" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/blog/">blog</a></p>
+              <p class="item-title"><a href="/2015/10/27/hello-world/" class="title">Github Pages + Hexo + Linux = Blog</a></p>
+              <p class="item-date"><time datetime="2015-10-27T03:06:05.000Z" itemprop="datePublished">2015-10-27</time></p>
+            </div>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -538,7 +688,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consistency/">consistency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-database/">distributed database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/draft/">draft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/failover/">failover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -547,7 +697,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
+      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/consistency/" style="font-size: 10px;">consistency</a> <a href="/tags/distributed-database/" style="font-size: 10px;">distributed database</a> <a href="/tags/distributed-filesystem/" style="font-size: 10px;">distributed filesystem</a> <a href="/tags/draft/" style="font-size: 10px;">draft</a> <a href="/tags/failover/" style="font-size: 10px;">failover</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
     </div>
   </div>
 
@@ -556,7 +706,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 

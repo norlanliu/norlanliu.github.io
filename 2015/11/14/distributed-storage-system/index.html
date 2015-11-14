@@ -3,17 +3,43 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: binary search | Pontus</title>
+  <title>分布式系统——容错 | Pontus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="汇涓流已成江海">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Pontus">
-<meta property="og:url" content="http://norlanliu.github.io/tags/binary-search/index.html">
+  <meta name="description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+前言
+通过将近一个月时间的学习，终于敢开始写着篇博客，如果有什么不对或者不足的地方，
+还望大家斧正。
+本文主要讨论分布式存储系统的主要的容错机制，以两种主流的一致性算法为主线，
+结合实际的分布式存储系统，看这些算法和系统是如何解决分布式存储中的一致性
+问题的。
+本文以问题的形式进行推进，希望大家在看的时候，能够站在一个系统设计者的角度
+去思考这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统——容错">
+<meta property="og:url" content="http://norlanliu.github.io/2015/11/14/distributed-storage-system/index.html">
 <meta property="og:site_name" content="Pontus">
-<meta property="og:description" content="汇涓流已成江海">
+<meta property="og:description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+前言
+通过将近一个月时间的学习，终于敢开始写着篇博客，如果有什么不对或者不足的地方，
+还望大家斧正。
+本文主要讨论分布式存储系统的主要的容错机制，以两种主流的一致性算法为主线，
+结合实际的分布式存储系统，看这些算法和系统是如何解决分布式存储中的一致性
+问题的。
+本文以问题的形式进行推进，希望大家在看的时候，能够站在一个系统设计者的角度
+去思考这">
+<meta property="og:image" content="http://7xnl3v.com1.z0.glb.clouddn.com/norlanliupb.png">
+<meta property="og:updated_time" content="2015-11-14T14:38:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pontus">
-<meta name="twitter:description" content="汇涓流已成江海">
+<meta name="twitter:title" content="分布式系统——容错">
+<meta name="twitter:description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+前言
+通过将近一个月时间的学习，终于敢开始写着篇博客，如果有什么不对或者不足的地方，
+还望大家斧正。
+本文主要讨论分布式存储系统的主要的容错机制，以两种主流的一致性算法为主线，
+结合实际的分布式存储系统，看这些算法和系统是如何解决分布式存储中的一致性
+问题的。
+本文以问题的形式进行推进，希望大家在看的时候，能够站在一个系统设计者的角度
+去思考这">
   
   
     <link rel="icon" href="favicon.png">
@@ -129,49 +155,168 @@
 </aside>
 
       
-      <section id="main">
-    <section class="archives-wrap">
-    <div class="archive-tag-wrap">
-      <span class="archive-tag">#binary search</span>
-    </div>
-    <div class="archives">
+      <section id="main"><article id="post-distributed-storage-system" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2015/10/29/count-complete-binary-tree/" class="thumbnail">
-  
-    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144475.webp)" alt="Count complete binary tree" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
       
+	
+		<img src="http://photos.tuchong.com/993772/f/19144660.webp" class="article-banner">
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/29/count-complete-binary-tree/">Count complete binary tree</a>
+    <h1 class="article-title" itemprop="name">
+      分布式系统——容错
     </h1>
   
 
-      
-        
-  <div class="archive-article-date">
+        <div class="article-meta">
+          
+  <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/29/count-complete-binary-tree/">
-      <time datetime="2015-10-29T02:46:25.000Z" itemprop="datePublished">2015 10月 29</time>
+    <a href="/2015/11/14/distributed-storage-system/">
+      <time datetime="2015-11-14T14:38:29.000Z" itemprop="datePublished">2015-11-14</time>
     </a>
   </div>
 
 
-      
-    </header>
-  </div>
-</article>
+          
+        </div>
+      </header>
     
-    </div></section>
-    </section>
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<h2 id="前言">前言</h2><hr>
+<p>通过将近一个月时间的学习，终于敢开始写着篇博客，如果有什么不对或者不足的地方，
+还望大家斧正。</p>
+<p>本文主要讨论分布式存储系统的主要的容错机制，以两种主流的一致性算法为主线，
+结合实际的分布式存储系统，看这些算法和系统是如何解决分布式存储中的一致性
+问题的。</p>
+<p>本文以问题的形式进行推进，希望大家在看的时候，能够站在一个系统设计者的角度
+去思考这些问题，当你思考过后再去看答案，没准你的想法会更好。</p>
+<h2 id="综述">综述</h2><hr>
+<p>分布式存储系统的一个主要目标就是实现容错，系统要保证在服务器/网络/程序
+任何一方面挂掉的情况下保持可用性，正确性。</p>
+<p><em>Q1: 如何实现系统的正确性和可用性？</em></p>
+<p>答案很简单，使用backup（副本），当系统中某个服务不可用了，立即切换到backup，
+由backup继续提供服务。那么问题又来了，backup接替了原来的primary，如果它的
+状态和原来的master不一致的话，就会导致client在不同时刻看到的系统状态不一致。
+就好比你的银行卡里今天有￥1M，明天看却只有￥1K了，这怎么能忍。</p>
+<p>换句话说，我们要保证整个系统在任何时候都要以相同的顺序执行相同的操作，前面
+已经执行完的操作也被后续的操作所继承，并且所有的操作只执行一次。</p>
+<p>所以接下来就看看如何解决这个一致性问题。</p>
+<h2 id="一致性">一致性</h2><hr>
+<p>其实，我们要解决的问题就是如何保证primary和backups之间的一致性。可能有人就会
+说了，这还不简单，只要保证primary和backups都执行了client的所有操作不就可以
+保证一致性了嘛。很好，那我们就按照这个思路继续往下走。</p>
+<p>首先，来看一看基本的消息模型。
+<img src="http://7xnl3v.com1.z0.glb.clouddn.com/norlanliupb.png" alt="Primary/Backup">
+那么问题来了。</p>
+<p><em>Q2：Primary 挂掉，该怎么办？</em></p>
+<p>如果Primary挂掉，我们首先想到的是把一个backup提成为Primary。接着，问题又来了
+提哪个backup呢？最naive的方法就是随机选一个backup作为新的Primary。如果这样，
+我们就必须保证所有的backup都是实时跟Primary同步的，这对系统的要求是极高的，
+也是不太现实的，由于网络，主机问题，如果要实现实时同步，会导致系统的响应延迟变得
+很高。那么有没有什么解决方案呢？显然是有的。下面就引出一致性算法里面极其重要
+的一个思想：<em>“Overlapping Majorities”</em>。</p>
+<p><em>“Overlapping Majorities”</em>的意思就是对每个操作，集群中至少有一半servers保存了
+该操作的状态，这样就至少有一台server执行了所有的操作，在通过适当的leader
+选举机制，就能够确保新的leader也执行了前面所有的操作。</p>
+<p>那么问题又来了，怎么去选举一个leader呢？</p>
+<p><em>Q3: 如何选举leader？</em></p>
+<p>我目前看到比较好的方案是raft算法的，给每台server设定一个随机时间，当该随机时间到达
+以后，这台server就会成为candidate，然后进行投票来实现leader选举。</p>
+<p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="external">Raft演示</a></p>
+<p><em>Q4: 如何保证所有的操作只执行一次(Exactly once) </em></p>
+<p>方法也很简单。给Client的每个请求都设置一个Unique ID来唯一标识请求，这样在Server
+执行每个请求时就可以过滤掉重复的请求。</p>
+<h2 id="场景分析">场景分析</h2><hr>
+<p>现在基本概念说清楚以后，我们来对消息传输的每个步骤来分析。</p>
+<p>1.Client发送Op到Primary</p>
+<p>如果这一步挂掉，相当于客户端没有发起请求，所以不会影响系统的一致性。</p>
+<p>2.Primary接收到Client的请求，转发该请求到Backups；</p>
+<p>如果这一步挂掉，Primary不会接收到Majority of Backups的确认信息，然后就会
+返回给Client一个失败的Reply。</p>
+<p>3.Backups返回Acks到Primary。</p>
+<p>如果某些Backups返回信息失败，但是只要Primary没有收到Majority of Backups的确认
+信息，它就会返回给Client失败的Reply。</p>
+<p>4.Primary接收到Majority of Backups的Acks信息后，Reply to Client.</p>
+<p>如果这一步失败，系统此时已经成功执行该操作，但是Client却没有收到成功的
+反馈，此时Client会处于一个Unknown state，Client重新发起该请求，由于是
+同一个请求（有相同的UUID），所以该请求会被过滤掉，直接返回给Client结果。</p>
+<p>5.Primary发送Commit信息给Backups。</p>
+<p>如果这一步失败，可以在以后的请求中在进行同步。Commit信息的目的是让Backups
+去执行所记录的操作。</p>
+<p>6.network partition</p>
+<p>如果出现网络划分。比如A，B，C，现在A是Primary，如果A被划分出去，那么A再
+接收到Client的请求后，就不会得到Majority of Backups的Acks了，就没有办法
+执行用户的操作。而B&amp;C会重新选举出一个Primary，执行用户的操作。</p>
+<p>如果网络修复以后，A就会回滚它的Uncommited的操作，然后去匹配新Leader的操作。</p>
+<h2 id="后记">后记</h2><hr>
+<p>以上就是基于leader选举的一致性算法，也是<a href="https://raft.github.io/" target="_blank" rel="external">RAFT</a>
+算法的基本思想。</p>
+<p>当然还有一种很出名的一致性算法<a href="https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" target="_blank" rel="external">Paxos</a>。
+有兴趣可以学习一下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="cigz78051000m6opvznzryzwx" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/11/14/distributed-storage-system/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consistency/">consistency</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/distributed-database/">distributed database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/draft/">draft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/failover/">failover</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/31/rotate-vector/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">平移数组（Rotate Vector）</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2015/11/14/distributed-storage-system/" data-title="分布式系统——容错" data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"norlanliu"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+
+
+</section>
       
         <aside id="sidebar">
   
