@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        4
+        5
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        16
+        18
         <span>标签</span>
       </div>
     </div>
@@ -130,6 +130,106 @@
 
       
       <section id="main">
+      <article id="post-dp-quadrangle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2015/12/08/dp-quadrangle/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19145268.webp" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/08/dp-quadrangle/">动态规划（四边形不等式优化）</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/12/08/dp-quadrangle/">
+      <time datetime="2015-12-08T07:32:18.000Z" itemprop="datePublished">2015-12-08</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h2 id="区间型动态规划：合并石子">区间型动态规划：合并石子</h2><p>状态转移方程：
+<img src="http://latex.codecogs.com/gif.latex?m[i,j]=\min\limits_{i\leq k&lt;j}\{m[i,k]+m[k+1,j]+c[i,j]\}" alt=""></p>
+<p>显而易见，这种方法时间复杂度是<code>O(n^3)</code>，如何去优化？</p>
+<h2 id="四边形不等式">四边形不等式</h2><p>通过四边形不等式的优化，可以进一步限定k的范围，从而可以将事件复杂度降为
+<code>O(n^2)</code>，我们最终的目的是证明决策变量k的单调性。</p>
+<p>通过不断的搜索，发现此优化方法原来是姚期智的夫人储枫(Frances Yao)所写，默默
+膜拜了一番。</p>
+<p>算法相关论文地址：<a href="http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/p429-yao.pdf" target="_blank" rel="external">论文</a></p>
+<h3 id="价值函数c[i,j]">价值函数<code>c[i,j]</code></h3><p>公式1：
+<img src="http://latex.codecogs.com/gif.latex?c[b,c]\leq c[a,d],\{a\le b\le c\le d\}" alt=""></p>
+<p>满足公式1，说明价值函数<code>c[i,j]</code>满足区间的单调性。</p>
+<p>公式2：
+<img src="http://latex.codecogs.com/gif.latex?c[a,c]+c[b,d] \leq c[b,c]+c[a,d],\{a\le b\le c\le d\}" alt=""></p>
+<p>满足公式2，说明价值函数<code>c[i,j]</code>满足四边形不等式。</p>
+<p>对于石子合并问题，价值函数显然满足上述两个公式。</p>
+<h3 id="状态转移函数m[i,j]">状态转移函数<code>m[i,j]</code></h3><p>要证明状态转移函数也满足四变形不等式.</p>
+<p>引理1:
+<img src="http://latex.codecogs.com/gif.latex?m[a,c]+m[b,d] \leq m[b,c]+m[a,d],\{a\le b\le c\le d\}" alt=""></p>
+<p>具体的证明过程是通过数学归纳法来的，相关证明过程可参看论文，本人愚顿，看了
+好久，才感觉明白了，最重要的一步则是：
+<img src="http://latex.codecogs.com/gif.latex?m[z,c]+m[y,d] \leq m[z,d]+m[y,c],\{z\le y&lt; c&lt; d\}" alt="">
+证明的过程中又引用了需要证明的结论，我的理解是数学归纳法，上述公式的范围
+比结论的范围小，故可以引用。</p>
+<h3 id="决策变量的单调性">决策变量的单调性</h3><p>假设<code>k[i,j]</code>表示<code>m[i,j]</code>取得最小值时的决策值。</p>
+<p>引理2：
+<img src="http://latex.codecogs.com/gif.latex?k[i,j-1] \leq k[i,j] \le k[i+1,j]" alt="">
+根据对称性只需证明<code>k[i,j-1]&lt;=k[i,j]</code>, 假设<code>x=k[i,j-1]</code>，对任意<code>i&lt;y&lt;x&lt;j-1&lt;j</code>.
+<img src="http://latex.codecogs.com/gif.latex?m[y,j-1]+m[x,j] \leq m[y,j]+m[x,j-1],\{y&lt; x&lt; j-1&lt; j\}" alt=""></p>
+<p>不等式两侧同时加上：
+<img src="http://latex.codecogs.com/gif.latex?w[i,j-1]+w[i,j]+m[i,x-1]+m[i,y-1]" alt=""></p>
+<p>then:
+<img src="http://latex.codecogs.com/gif.latex?m_y[i,j-1]+m_x[i,j] \leq m_y[i,j]+m_x[i,j-1]" alt=""></p>
+<p>因为：
+<img src="http://latex.codecogs.com/gif.latex?m_x[i,j-1]\leq m_y[i,j-1]" alt=""></p>
+<p>所以:
+<img src="http://latex.codecogs.com/gif.latex?m_x[i,j]\leq m_y[i,j]" alt=""></p>
+<p>从而可以确定<code>k[i,j]</code>不可能小于x，也就是说<code>k[i,j-1]&lt;=k[i,j]</code>.</p>
+<h2 id="石子合并代码">石子合并代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> piles[<span class="number">5001</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *status[<span class="number">5001</span>];</span><br><span class="line"><span class="keyword">int</span> *cv[<span class="number">5001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quard_dp</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, i, j, k, dis;</span><br><span class="line">	<span class="keyword">int</span> min ,tmp;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	piles[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(n != <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;piles[i]);</span><br><span class="line">			piles[i] += piles[i-<span class="number">1</span>];</span><br><span class="line">			status[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((n+<span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">			status[i][i] = <span class="number">0</span>;</span><br><span class="line">			cv[i] = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>((n+<span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">			cv[i][i] = i;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(dis = <span class="number">1</span>; dis &lt; n; ++dis)&#123;</span><br><span class="line">			<span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n-dis; i++)&#123;</span><br><span class="line">				j = i + dis;</span><br><span class="line">				min = INT_MAX;</span><br><span class="line">				<span class="keyword">for</span>(k = cv[i][j-<span class="number">1</span>]; k &lt;= cv[i+<span class="number">1</span>][j] &amp;&amp; k &lt; n; ++k)&#123;</span><br><span class="line">					tmp = status[i][k] + status[k+<span class="number">1</span>][j] + piles[j]- piles[i-<span class="number">1</span>];</span><br><span class="line">					<span class="keyword">if</span>(tmp &lt; min) &#123;</span><br><span class="line">						min = tmp;</span><br><span class="line">						cv[i][j] = k;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				status[i][j] = min;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, status[<span class="number">1</span>][n]);</span><br><span class="line">		<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">			<span class="built_in">free</span>(status[i]);</span><br><span class="line">			<span class="built_in">free</span>(cv[i]);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/12/08/dp-quadrangle/" data-id="cihx2kgau000nv2pv7cvk3kgy" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/12/08/dp-quadrangle/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/quadrilateral/">quadrilateral</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-distributed-storage-system" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -249,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="cigz7a6k6000mbgpvxwu3evx8" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="cihx2kgax000sv2pvayd91ymd" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/11/14/distributed-storage-system/#ds-thread" class="article-comment-link">评论</a>
       
@@ -361,7 +461,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cigz7a6ju0006bgpvtqwt5f2t" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cihx2kgae0008v2pv7sexmvh7" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/31/rotate-vector/#ds-thread" class="article-comment-link">评论</a>
       
@@ -450,7 +550,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cigz7a6kj000zbgpvjv4sg3ql" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cihx2kgb10015v2pv3xmx2fah" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/#ds-thread" class="article-comment-link">评论</a>
       
@@ -583,7 +683,7 @@ Markdown怎么写。</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/27/hello-world/" data-id="cigz7a6k0000dbgpvnvuxdg1b" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/27/hello-world/" data-id="cihx2kgap000ev2pvj9jtz6su" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/27/hello-world/#ds-thread" class="article-comment-link">评论</a>
       
@@ -606,6 +706,23 @@ Markdown怎么写。</p>
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/12/08/dp-quadrangle/" class="thumbnail">
+  
+    <span style="background-image:url(http://photos.tuchong.com/993772/f/19145268.webp)" alt="动态规划（四边形不等式优化）" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/algorithm/">algorithm</a></p>
+              <p class="item-title"><a href="/2015/12/08/dp-quadrangle/" class="title">动态规划（四边形不等式优化）</a></p>
+              <p class="item-date"><time datetime="2015-12-08T07:32:18.000Z" itemprop="datePublished">2015-12-08</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -684,7 +801,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/distributed-system/">distributed system</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/distributed-system/">distributed system</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -693,7 +810,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consistency/">consistency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-database/">distributed database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/draft/">draft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/failover/">failover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consistency/">consistency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-database/">distributed database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/draft/">draft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/failover/">failover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quadrilateral/">quadrilateral</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -702,7 +819,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/consistency/" style="font-size: 10px;">consistency</a> <a href="/tags/distributed-database/" style="font-size: 10px;">distributed database</a> <a href="/tags/distributed-filesystem/" style="font-size: 10px;">distributed filesystem</a> <a href="/tags/draft/" style="font-size: 10px;">draft</a> <a href="/tags/failover/" style="font-size: 10px;">failover</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
+      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/consistency/" style="font-size: 10px;">consistency</a> <a href="/tags/distributed-database/" style="font-size: 10px;">distributed database</a> <a href="/tags/distributed-filesystem/" style="font-size: 10px;">distributed filesystem</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/draft/" style="font-size: 10px;">draft</a> <a href="/tags/failover/" style="font-size: 10px;">failover</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/quadrilateral/" style="font-size: 10px;">quadrilateral</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
     </div>
   </div>
 
@@ -711,7 +828,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
