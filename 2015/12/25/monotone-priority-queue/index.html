@@ -3,17 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: complete binary tree | Pontus</title>
+  <title>单调优先队列(monotone-priority-queue) | Pontus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="汇涓流已成江海">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Pontus">
-<meta property="og:url" content="http://norlanliu.github.io/tags/complete-binary-tree/index.html">
+  <meta name="description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+综述基本概念使用双端队列(deque)实现单调的优先队列，保证队列中的元素始终是单调的。
+示例下面构造一个单调递增的优先队列，每次从队首插入元素，如果队首的元素小于该元素，
+则弹出队首的元素，直至队首元素不小于插入元素。
+1[2,3,5,1,4]&amp;#10;//&amp;#20381;&amp;#27425;&amp;#25554;&amp;#20837;&amp;#21333;&amp;#3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调优先队列(monotone-priority-queue)">
+<meta property="og:url" content="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/index.html">
 <meta property="og:site_name" content="Pontus">
-<meta property="og:description" content="汇涓流已成江海">
+<meta property="og:description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+综述基本概念使用双端队列(deque)实现单调的优先队列，保证队列中的元素始终是单调的。
+示例下面构造一个单调递增的优先队列，每次从队首插入元素，如果队首的元素小于该元素，
+则弹出队首的元素，直至队首元素不小于插入元素。
+1[2,3,5,1,4]&amp;#10;//&amp;#20381;&amp;#27425;&amp;#25554;&amp;#20837;&amp;#21333;&amp;#3">
+<meta property="og:updated_time" content="2015-12-25T02:41:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pontus">
-<meta name="twitter:description" content="汇涓流已成江海">
+<meta name="twitter:title" content="单调优先队列(monotone-priority-queue)">
+<meta name="twitter:description" content="(Banner图片来自一喜欢摄影的同学：心碎乌托邦)
+综述基本概念使用双端队列(deque)实现单调的优先队列，保证队列中的元素始终是单调的。
+示例下面构造一个单调递增的优先队列，每次从队首插入元素，如果队首的元素小于该元素，
+则弹出队首的元素，直至队首元素不小于插入元素。
+1[2,3,5,1,4]&amp;#10;//&amp;#20381;&amp;#27425;&amp;#25554;&amp;#20837;&amp;#21333;&amp;#3">
   
   
     <link rel="icon" href="favicon.png">
@@ -129,49 +142,135 @@
 </aside>
 
       
-      <section id="main">
-    <section class="archives-wrap">
-    <div class="archive-tag-wrap">
-      <span class="archive-tag">#complete binary tree</span>
-    </div>
-    <div class="archives">
+      <section id="main"><article id="post-monotone-priority-queue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2015/10/29/count-complete-binary-tree/" class="thumbnail">
-  
-    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144475.webp)" alt="Count complete binary tree" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
       
+	
+		<img src="http://photos.tuchong.com/993772/f/19145197.webp" class="article-banner">
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/29/count-complete-binary-tree/">Count complete binary tree</a>
+    <h1 class="article-title" itemprop="name">
+      单调优先队列(monotone-priority-queue)
     </h1>
   
 
-      
-        
-  <div class="archive-article-date">
+        <div class="article-meta">
+          
+  <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/29/count-complete-binary-tree/">
-      <time datetime="2015-10-29T02:46:25.000Z" itemprop="datePublished">2015 10月 29</time>
+    <a href="/2015/12/25/monotone-priority-queue/">
+      <time datetime="2015-12-25T02:41:17.000Z" itemprop="datePublished">2015-12-25</time>
     </a>
   </div>
 
 
-      
-    </header>
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
   </div>
-</article>
+
+        </div>
+      </header>
     
-    </div></section>
-    </section>
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<h1 id="综述">综述</h1><h2 id="基本概念">基本概念</h2><p>使用双端队列(deque)实现单调的优先队列，保证队列中的元素始终是单调的。</p>
+<h2 id="示例">示例</h2><p>下面构造一个单调递增的优先队列，每次从队首插入元素，如果队首的元素小于该元素，
+则弹出队首的元素，直至队首元素不小于插入元素。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2,3,5,1,4]&#10;//&#20381;&#27425;&#25554;&#20837;&#21333;&#35843;&#38431;&#21015;&#10;#1: [2]&#10;#2: [3]&#10;#3: [5]&#10;#4: [1,5]&#10;#5: [4,5]</span><br></pre></td></tr></table></figure></p>
+<h1 id="应用">应用</h1><h2 id="题目">题目</h2><p><a href="https://leetcode.com/problems/sliding-window-maximum/" target="_blank" rel="external">leetcode 239. Sliding Window Maximum</a></p>
+<h2 id="解决方案">解决方案</h2><p>此题是单调优先队列的完美的应用场景，每次都要获取sliding window内的最大值。</p>
+<p>解决方案也很简单，构建一个单调递减的优先队列，每次插入新加入sliding window
+的元素，但是，有一点要注意，一定要删除已经移出sliding window的那个元素。</p>
+<p>算法流程：</p>
+<ol>
+<li>检查单调优先队列队首元素是否等于移出sliding window的那个元素，如果是那就弹出队首元素;</li>
+<li>将新元素插入单调优先队列</li>
+<li>将队首的最大元素插入到结果数组中。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; maxSlidingWindow(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">    	<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">    	<span class="keyword">int</span> i, size;</span><br><span class="line">    	size = nums.size();</span><br><span class="line">    	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; size; ++i)&#123;</span><br><span class="line">    		<span class="keyword">if</span>(!<span class="built_in">queue</span>.empty() &amp;&amp; <span class="built_in">queue</span>.front() == i-k)&#123;</span><br><span class="line">    			<span class="built_in">queue</span>.pop_front();</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">while</span>(!<span class="built_in">queue</span>.empty() &amp;&amp; nums[<span class="built_in">queue</span>.back()] &lt; nums[i])&#123;</span><br><span class="line">    			<span class="built_in">queue</span>.pop_back();</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="built_in">queue</span>.push_back(i);</span><br><span class="line">    		<span class="keyword">if</span>(i &gt;= k-<span class="number">1</span>)&#123;</span><br><span class="line">    			ans.push_back(nums[<span class="built_in">queue</span>.front()]);</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="证明">证明</h2><p>问题是解决了，但是还是感觉心里不踏实，这样随便说两句总是难以说服自己算法
+是正确的，所以还是证明一下比较靠谱。</p>
+<p>要证明算法的正确性，也就是证明单调优先队列始终存储的是sliding window内的
+元素，由于数组中的每个元素都会插入到单调优先队列中，所以只需证明单调优先队列
+中保存的索引值始终都介于sliding window内。</p>
+<p>方案中单调优先队列既保证了队列中元素的单调性又保证了元素所对应索引的单调性。
+队列中所存储的索引单调递增，队列中索引所对应的值是单调递减的。</p>
+<p>命题：<strong>单调优先队列中保存的索引值始终都介于sliding window内</strong></p>
+<p>使用数学归纳法(induction)。</p>
+<p>1.当<code>i=0</code>时:</p>
+<p>此时单调优先队列为空，单调优先队列中只会插入0，显然满足命题。</p>
+<p>2.假设当<code>i=m</code>时，命题成立，那么当<code>i=m+1</code>时：</p>
+<p>当<code>i=m</code>时，队列中所有元素<code>x</code>都满足<code>m-k&lt; x &lt;= m</code>，当插入第<code>m+1</code>个元素时，如果
+队首元素等于<code>m+1-k</code>则弹出队首元素，否则就不弹出，这样就保证了队列中的所有元素
+都满足<code>m+1-k&lt;x&lt;=m+1</code>。</p>
+<p>综上所述，命题得证。</p>
+<h2 id="时间复杂度">时间复杂度</h2><p>利用摊还分析，数组中的每个元素最多只会进入队列一次和弹出一次，所以最坏的情况下
+的时间复杂度为<code>O(n)</code>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/" data-id="ciil2nl4n000ek4pv4cr5wsm0" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/priority-heap/">priority heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/12/08/dp-quadrangle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">动态规划（四边形不等式优化）</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2015/12/25/monotone-priority-queue/" data-title="单调优先队列(monotone-priority-queue)" data-url="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"norlanliu"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</section>
+
+
+</section>
       
         <aside id="sidebar">
   

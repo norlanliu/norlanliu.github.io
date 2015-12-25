@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        5
+        6
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        18
+        19
         <span>标签</span>
       </div>
     </div>
@@ -130,6 +130,102 @@
 
       
       <section id="main">
+      <article id="post-monotone-priority-queue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2015/12/25/monotone-priority-queue/" itemprop="url"><img src="http://photos.tuchong.com/993772/f/19145197.webp" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/25/monotone-priority-queue/">单调优先队列(monotone-priority-queue)</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/12/25/monotone-priority-queue/">
+      <time datetime="2015-12-25T02:41:17.000Z" itemprop="datePublished">2015-12-25</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><em>(Banner图片来自一喜欢摄影的同学：<a href="http://tuchong.com/993772/" target="_blank" rel="external">心碎乌托邦</a>)</em></p>
+<h1 id="综述">综述</h1><h2 id="基本概念">基本概念</h2><p>使用双端队列(deque)实现单调的优先队列，保证队列中的元素始终是单调的。</p>
+<h2 id="示例">示例</h2><p>下面构造一个单调递增的优先队列，每次从队首插入元素，如果队首的元素小于该元素，
+则弹出队首的元素，直至队首元素不小于插入元素。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2,3,5,1,4]&#10;//&#20381;&#27425;&#25554;&#20837;&#21333;&#35843;&#38431;&#21015;&#10;#1: [2]&#10;#2: [3]&#10;#3: [5]&#10;#4: [1,5]&#10;#5: [4,5]</span><br></pre></td></tr></table></figure></p>
+<h1 id="应用">应用</h1><h2 id="题目">题目</h2><p><a href="https://leetcode.com/problems/sliding-window-maximum/" target="_blank" rel="external">leetcode 239. Sliding Window Maximum</a></p>
+<h2 id="解决方案">解决方案</h2><p>此题是单调优先队列的完美的应用场景，每次都要获取sliding window内的最大值。</p>
+<p>解决方案也很简单，构建一个单调递减的优先队列，每次插入新加入sliding window
+的元素，但是，有一点要注意，一定要删除已经移出sliding window的那个元素。</p>
+<p>算法流程：</p>
+<ol>
+<li>检查单调优先队列队首元素是否等于移出sliding window的那个元素，如果是那就弹出队首元素;</li>
+<li>将新元素插入单调优先队列</li>
+<li>将队首的最大元素插入到结果数组中。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; maxSlidingWindow(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">    	<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">queue</span>;</span><br><span class="line">    	<span class="keyword">int</span> i, size;</span><br><span class="line">    	size = nums.size();</span><br><span class="line">    	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; size; ++i)&#123;</span><br><span class="line">    		<span class="keyword">if</span>(!<span class="built_in">queue</span>.empty() &amp;&amp; <span class="built_in">queue</span>.front() == i-k)&#123;</span><br><span class="line">    			<span class="built_in">queue</span>.pop_front();</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">while</span>(!<span class="built_in">queue</span>.empty() &amp;&amp; nums[<span class="built_in">queue</span>.back()] &lt; nums[i])&#123;</span><br><span class="line">    			<span class="built_in">queue</span>.pop_back();</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="built_in">queue</span>.push_back(i);</span><br><span class="line">    		<span class="keyword">if</span>(i &gt;= k-<span class="number">1</span>)&#123;</span><br><span class="line">    			ans.push_back(nums[<span class="built_in">queue</span>.front()]);</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="证明">证明</h2><p>问题是解决了，但是还是感觉心里不踏实，这样随便说两句总是难以说服自己算法
+是正确的，所以还是证明一下比较靠谱。</p>
+<p>要证明算法的正确性，也就是证明单调优先队列始终存储的是sliding window内的
+元素，由于数组中的每个元素都会插入到单调优先队列中，所以只需证明单调优先队列
+中保存的索引值始终都介于sliding window内。</p>
+<p>方案中单调优先队列既保证了队列中元素的单调性又保证了元素所对应索引的单调性。
+队列中所存储的索引单调递增，队列中索引所对应的值是单调递减的。</p>
+<p>命题：<strong>单调优先队列中保存的索引值始终都介于sliding window内</strong></p>
+<p>使用数学归纳法(induction)。</p>
+<p>1.当<code>i=0</code>时:</p>
+<p>此时单调优先队列为空，单调优先队列中只会插入0，显然满足命题。</p>
+<p>2.假设当<code>i=m</code>时，命题成立，那么当<code>i=m+1</code>时：</p>
+<p>当<code>i=m</code>时，队列中所有元素<code>x</code>都满足<code>m-k&lt; x &lt;= m</code>，当插入第<code>m+1</code>个元素时，如果
+队首元素等于<code>m+1-k</code>则弹出队首元素，否则就不弹出，这样就保证了队列中的所有元素
+都满足<code>m+1-k&lt;x&lt;=m+1</code>。</p>
+<p>综上所述，命题得证。</p>
+<h2 id="时间复杂度">时间复杂度</h2><p>利用摊还分析，数组中的每个元素最多只会进入队列一次和弹出一次，所以最坏的情况下
+的时间复杂度为<code>O(n)</code>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/" data-id="ciil2nl4n000ek4pv4cr5wsm0" class="article-share-link">分享到</a>
+      
+        <a href="http://norlanliu.github.io/2015/12/25/monotone-priority-queue/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/priority-heap/">priority heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-dp-quadrangle" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -215,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/12/08/dp-quadrangle/" data-id="cihx2kgau000nv2pv7cvk3kgy" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/12/08/dp-quadrangle/" data-id="ciil2nl50000rk4pvqvgqawks" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/12/08/dp-quadrangle/#ds-thread" class="article-comment-link">评论</a>
       
@@ -349,7 +445,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="cihx2kgax000sv2pvayd91ymd" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/11/14/distributed-storage-system/" data-id="ciil2nl53000wk4pva3i5dknh" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/11/14/distributed-storage-system/#ds-thread" class="article-comment-link">评论</a>
       
@@ -461,7 +557,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="cihx2kgae0008v2pv7sexmvh7" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/31/rotate-vector/" data-id="ciil2nl4j0008k4pvn1s4umen" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/31/rotate-vector/#ds-thread" class="article-comment-link">评论</a>
       
@@ -550,7 +646,7 @@ For instance, with n = 8 and i = 3, the vector <code>abcdefg</code> is rotated t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="cihx2kgb10015v2pv3xmx2fah" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/" data-id="ciil2nl590019k4pvp0188c3e" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/29/count-complete-binary-tree/#ds-thread" class="article-comment-link">评论</a>
       
@@ -683,7 +779,7 @@ Markdown怎么写。</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://norlanliu.github.io/2015/10/27/hello-world/" data-id="cihx2kgap000ev2pvj9jtz6su" class="article-share-link">分享到</a>
+      <a data-url="http://norlanliu.github.io/2015/10/27/hello-world/" data-id="ciil2nl4p000ik4pviq8kykml" class="article-share-link">分享到</a>
       
         <a href="http://norlanliu.github.io/2015/10/27/hello-world/#ds-thread" class="article-comment-link">评论</a>
       
@@ -706,6 +802,23 @@ Markdown怎么写。</p>
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/12/25/monotone-priority-queue/" class="thumbnail">
+  
+    <span style="background-image:url(http://photos.tuchong.com/993772/f/19145197.webp)" alt="单调优先队列(monotone-priority-queue)" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/algorithm/">algorithm</a></p>
+              <p class="item-title"><a href="/2015/12/25/monotone-priority-queue/" class="title">单调优先队列(monotone-priority-queue)</a></p>
+              <p class="item-date"><time datetime="2015-12-25T02:41:17.000Z" itemprop="datePublished">2015-12-25</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -775,23 +888,6 @@ Markdown怎么写。</p>
             </div>
           </li>
         
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2015/10/27/hello-world/" class="thumbnail">
-  
-    <span style="background-image:url(http://photos.tuchong.com/993772/f/19144706.webp)" alt="Github Pages + Hexo + Linux = Blog" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/blog/">blog</a></p>
-              <p class="item-title"><a href="/2015/10/27/hello-world/" class="title">Github Pages + Hexo + Linux = Blog</a></p>
-              <p class="item-date"><time datetime="2015-10-27T03:06:05.000Z" itemprop="datePublished">2015-10-27</time></p>
-            </div>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -801,7 +897,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/distributed-system/">distributed system</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/distributed-system/">distributed system</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -810,7 +906,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consistency/">consistency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-database/">distributed database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/draft/">draft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/failover/">failover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quadrilateral/">quadrilateral</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-search/">binary search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/complete-binary-tree/">complete binary tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consistency/">consistency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-database/">distributed database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-filesystem/">distributed filesystem</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/draft/">draft</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/failover/">failover</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/priority-heap/">priority heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quadrilateral/">quadrilateral</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vector/">vector</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -819,7 +915,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/consistency/" style="font-size: 10px;">consistency</a> <a href="/tags/distributed-database/" style="font-size: 10px;">distributed database</a> <a href="/tags/distributed-filesystem/" style="font-size: 10px;">distributed filesystem</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/draft/" style="font-size: 10px;">draft</a> <a href="/tags/failover/" style="font-size: 10px;">failover</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/quadrilateral/" style="font-size: 10px;">quadrilateral</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
+      <a href="/tags/binary-search/" style="font-size: 10px;">binary search</a> <a href="/tags/complete-binary-tree/" style="font-size: 10px;">complete binary tree</a> <a href="/tags/consistency/" style="font-size: 10px;">consistency</a> <a href="/tags/distributed-database/" style="font-size: 10px;">distributed database</a> <a href="/tags/distributed-filesystem/" style="font-size: 10px;">distributed filesystem</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/draft/" style="font-size: 10px;">draft</a> <a href="/tags/failover/" style="font-size: 10px;">failover</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/priority-heap/" style="font-size: 10px;">priority heap</a> <a href="/tags/quadrilateral/" style="font-size: 10px;">quadrilateral</a> <a href="/tags/vector/" style="font-size: 10px;">vector</a>
     </div>
   </div>
 
@@ -828,7 +924,7 @@ Markdown怎么写。</p>
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
